@@ -18,8 +18,11 @@ class CreateStructuresTable extends Migration
             $table->string('name');
             $table->integer('city_id')->unsigned()->index();
             $table->string('phone');
+            $table->integer('user_id')->unsigned()->index();
+            $table->text('address');
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('NO ACTION')->onUpdate('NO ACTION');
         });
     }

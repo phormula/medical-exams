@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StructuresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::post('/addstructure', [DashboardController::class, 'store']);
+
+Route::get('/getregions', [DashboardController::class,'getregions']);
+Route::get('findStateWithRegionID/{id}', [DashboardController::class,'findStateWithRegionID']);
+Route::get('findCityWithStateID/{id}', [DashboardController::class,'findCityWithStateID']);
+Route::get('findZipWithCityID/{id}', [DashboardController::class,'findZipWithCityID']);
+
+Route::get('/search/{term}', [StructuresController::class, 'search'])->name('search');
+
+Auth::routes();
+
+

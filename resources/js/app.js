@@ -1,11 +1,16 @@
+const { result } = require('lodash');
+
 require('./bootstrap');
 
 // Get Regions
 $(document).ready(function() {
+    _token="{{csrf_token()}}";
+    $('#inputZip').empty();
+
     $.ajax({
         url: '/getregions/',
         type: "GET",
-        data : {"_token":"{{ csrf_token() }}"},
+        data : {"_token":_token},
         dataType: "json",
         success:function(data) {
             if(data){
@@ -27,7 +32,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '/findStateWithRegionID/'+regionID,
                 type: "GET",
-                data : {"_token":"{{ csrf_token() }}"},
+                data : {"_token":_token},
                 dataType: "json",
                 success:function(data) {
                     if(data){
@@ -56,7 +61,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '/findCityWithStateID/'+stateID,
                 type: "GET",
-                data : {"_token":"{{ csrf_token() }}"},
+                data : {"_token":_token},
                 dataType: "json",
                 success:function(data) {
                     if(data){
@@ -84,7 +89,7 @@ $(document).ready(function() {
             $.ajax({
                 url: '/findZipWithCityID/'+cityID,
                 type: "GET",
-                data : {"_token":"{{ csrf_token() }}"},
+                data : {"_token":_token},
                 dataType: "json",
                 success:function(data) {
                     if(data){
@@ -99,6 +104,43 @@ $(document).ready(function() {
             });
         }else{
         $('#inputZip').empty();
+        }
+    });
+
+    $("#addstructure").submit(function( event ) {
+        event.preventDefault();
+        
+        var selectedCity = $("select#inputCity").children("option:selected").val();
+
+        var data = {
+            '_token' : $('meta[name="csrf-token"]').attr('content'),
+            'name' : $('#inputName').val(),
+            'phone' : $('#inputPhone').val(),
+            'city_id' : selectedCity,
+            'address' : $('#inputAddress').val()
+        }
+        if(data){
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '/addstructure',
+                type: "POST",
+                data : data,
+                dataType: "json",
+                success:function(response) {
+                    if(response){
+                        console.log(response.status);
+                        if(response.status == 'error'){
+                            $('.alert').addClass('alert-danger');
+                            $('.alert').html(response.message);
+                        }else{
+                            $('.alert').addClass('alert-success');
+                            $('.alert').html(response.message);
+                        }
+                    }else{
+                        $('.invalid-feedback').html('An internal servver error has occured');
+                    }
+                }
+            });
         }
     });
 });
