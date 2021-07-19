@@ -72,9 +72,6 @@
                                 <div class="form-group col-md-12">
                                     <label for="inputExams">Select Exams</label>
                                     <select class="custom-select" id="inputExams" multiple>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
                                     </select>
                                 </div>
                             </div>

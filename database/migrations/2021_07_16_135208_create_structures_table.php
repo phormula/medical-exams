@@ -20,6 +20,7 @@ class CreateStructuresTable extends Migration
             $table->string('phone');
             $table->integer('user_id')->unsigned()->index();
             $table->text('address');
+            $table->boolean('premium')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');

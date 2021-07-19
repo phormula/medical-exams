@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use auth;
+use App\Models\Exam;
 use App\Models\Cities;
 use App\Models\Region;
 use App\Models\States;
@@ -41,6 +42,12 @@ class DashboardController extends Controller
     {
         $regions = Region::orderBy('name', 'ASC')->get();
         return response()->json($regions);
+    }
+
+    public function getexams()
+    {
+        $exams = Exam::get();
+        return response()->json($exams);
     }
 
     public function findStateWithRegionID($id)

@@ -2,11 +2,11 @@ const { result } = require('lodash');
 
 require('./bootstrap');
 
-// Get Regions
 $(document).ready(function() {
     _token="{{csrf_token()}}";
     $('#inputZip').empty();
 
+    // Get Regions
     $.ajax({
         url: '/getregions/',
         type: "GET",
@@ -21,6 +21,23 @@ $(document).ready(function() {
                 });
             }else{
                     $('#inputRegion').empty();
+            }
+        }
+    });
+
+// Get Exams
+    $.ajax({
+        url: '/getexams/',
+        type: "GET",
+        data : {"_token":_token},
+        dataType: "json",
+        success:function(data) {
+            if(data){
+                $.each(data, function(key, value){
+                    $('select[id="inputExams"]').append('<option value="'+ value.id +'">' + value.name+ '</option>');
+                });
+            }else{
+                    $('#inputExams').empty();
             }
         }
     });

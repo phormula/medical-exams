@@ -14,7 +14,29 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" name="search" 
+                        value="@if(!empty($_GET) && !empty($_GET['search'])){{ $_GET['search'] }}@endif" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    @if(!empty($_GET) && !empty($_GET['search']))
+                    @if($structures->isNotEmpty())
+                    @foreach ($structures as $structure)
+                        <div class="post-list">
+                            <p @if($structure->premium) style="color:green" @endif >
+                            {{ $structure->name }} {{ $structure->city }}
+                            {{ $structure->state }}{{ $structure->region }}{{ $structure->address }}
+                            {{ $structure->zip }}</p>
+                        </div>
+                    @endforeach
+                    {{ $structures->appends(Request::get('page'))->links() }}
+                    @else 
+                        <div>
+                            <h2>No Structure found matching your exams search term</h2>
+                        </div>
+                    @endif
+                    @endif
                 </div>
             </div>
         </div>
