@@ -9,7 +9,8 @@
                     <div class="card-body">
                         <form  method="POST" action="{{ route('dashboard') }}" id="addstructure">
                             @csrf
-                            <div class="alert" role="alert"></div>
+                            <div class="alert alert-success" id="success-alert" role="alert" style="display: none;"></div>
+                            <div class="alert alert-danger" id="error-alert" role="alert" style="display: none;"></div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputName">Name</label>
@@ -23,7 +24,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputRegion">Region</label>
-                                    <select id="inputRegion" class="form-control">
+                                    <select class="form-control" id="inputRegion">
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -51,7 +52,7 @@
                                 <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="gridCheck">
                                 <label class="form-check-label" for="gridCheck">
-                                    Check me out
+                                    Premium
                                 </label>
                                 </div>
                             </div>

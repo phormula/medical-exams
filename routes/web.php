@@ -21,8 +21,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('/addstructure', [DashboardController::class, 'store']);
 
+Route::get('/getstructure', [DashboardController::class,'getstructure']);
 Route::get('/getregions', [DashboardController::class,'getregions']);
 Route::get('/getexams', [DashboardController::class,'getexams']);
+Route::get('/getstructureexams', [DashboardController::class,'getstructureexams']);
 Route::get('findStateWithRegionID/{id}', [DashboardController::class,'findStateWithRegionID']);
 Route::get('findCityWithStateID/{id}', [DashboardController::class,'findCityWithStateID']);
 Route::get('findZipWithCityID/{id}', [DashboardController::class,'findZipWithCityID']);

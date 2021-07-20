@@ -10,6 +10,7 @@ use App\Models\States;
 use App\Models\Structure;
 use App\Models\postal_codes;
 use Illuminate\Http\Request;
+use App\Models\StructureExam;
 
 class DashboardController extends Controller
 {
@@ -36,6 +37,37 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getstructure()
+    {
+        $userStructure = Structure::where('user_id', auth()->id())->first();
+        if($userStructure){
+            $structure = Structure::query()
+                ->join('cities', 'structures.city_id', '=', 'cities.id')
+                ->join('states', 'cities.state_id', '=', 'states.id')
+                ->join('regions', 'states.region_id', '=', 'regions.id')
+                ->join('postal_codes', 'cities.id', '=', 'postal_codes.city_id')
+                ->select('structures.name as name', 'cities.id as city', 'postal_codes.code as zip',
+                'states.id as state', 'regions.id as region', 'structures.address as address',
+                'structures.premium as premium', 'structures.phone as phone')
+                ->where('structures.user_id', auth()->id())
+                ->get();
+
+            return response()->json($structure);
+        }
+    }
+
+    public function getstructureexams()
+    {
+        $structureexam = StructureExam::query()
+                        ->join('structures', 'structure_exams.structure_id', 'structures.id')
+                        ->join('exams', 'structure_exams.exam_id', 'exams.id')
+                        ->where('structures.user_id', auth()->id())
+                        ->select('exams.id as id', 'exams.name as ename')
+                        ->get();
+
+        return response()->json($structureexam);
     }
 
     public function getregions()
@@ -86,9 +118,17 @@ class DashboardController extends Controller
                 ]);
             }
             else{
+                $structure = Structure::where('user_id', auth()->id())
+                                ->update([
+                                    'name' => $data->name,
+                                    'city_id' => $data->city_id,
+                                    'phone' => $data->phone,
+                                    'address' => $data->address,
+                                    'premium' => $data->premium,
+                                ]);
                 return response()->json([
-                    'status'=>'error',
-                    'message'=>'You have already added a Structure',
+                    'status'=>'success',
+                    'message'=>'Structure information updated',
                 ]);
             }
         // }

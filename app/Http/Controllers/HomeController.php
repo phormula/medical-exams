@@ -22,10 +22,17 @@ class HomeController extends Controller
         
         $exams = $request->input('search');
 
-        $this->validate($request, [
-            'search' => 'alpha_dash',
-        ]);
+        if($request->input('sortBy')){
+            $sort = $request->input('sortBy');
+        }else{
+            $sort = '';
+        }
 
+        // $this->validate($request, [
+        //     'search' => 'alpha_dash',
+        // ]);
+
+        //get structures based on search term
         $structures = StructureExam::query()
             ->join('exams', 'structure_exams.exam_id', '=', 'exams.id')
             ->join('structures', 'structure_exams.structure_id', '=', 'structures.id')
@@ -39,10 +46,14 @@ class HomeController extends Controller
             ->where('exams.name', 'LIKE', "%{$exams}%")
             ->groupBy('structures.name')
             ->orderBy('structures.premium', 'DESC')
-            ->orderBy('structures.name', 'ASC')
+            ->orderBy("{$sort}")
             ->paginate(10);
 
-        $structures->appends(['search' => $exams]);
+        //apend $_GET variables to URL
+        $structures->appends([
+            'search' => $exams,
+            'sortBy' => $sort,
+        ]);
 
         return view('home', compact('structures'));
     }
