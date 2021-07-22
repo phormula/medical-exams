@@ -11,11 +11,23 @@
 
 This project returns search results medical exams performed at various medical facilities in various locations. The geographical location data is populated with cities and regions in Italy.
 
-This project is done with PHP/ [Laravel](https://laravel.com/docs).
+This project is done with PHP/ [Laravel 8.x](https://laravel.com/).
 
 ## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Install [PHP 7.3+ or above](https://www.php.net) as required by Laravel 8.x.
+
+- Install [composer](https://getcomposer.org/download/).
+
+- Clone this repository
+```sh
+    $ git clone https://github.com/phormula/medical-exams.git
+```
+- This project uses by default SQlite database (add [SQlite driver](https://www.php.net/manual/en/sqlite3.installation.php) for your version)
+
+- create the SQlite database file under ```sh ./medical-exams/database/ ``` and name it ```sh database.sqlite ```
+- Update the ```sh .env ``` file with the absolute path of the database file ```sh (DB_DATABASE=/home/{path/to/project}/medical-exams/database/database.sqlite) ```
+
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
