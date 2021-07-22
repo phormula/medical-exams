@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class StructureExam extends Model
 {
     use HasFactory;
+    protected $fillable = ['structure_id', 'exam_id'];
 }

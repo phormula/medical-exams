@@ -56,7 +56,7 @@
                                 </label>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add Structure</button>
+                            <button type="submit" class="btn btn-success">Save</button>
                         </form>
                     </div>
             </div>
@@ -66,13 +66,14 @@
                 <div class="card-header">{{ __('Exams') }}</div>
                     <div class="card-body">
                         <p>Select list of medical exams offered by your Structure</p>
-                        <form  method="POST" action="{{ route('dashboard') }}" id="addstructure">
+                        <form  method="POST" action="{{ route('dashboard') }}" id="addexams">
                             @csrf
-                            <div class="alert" role="alert"></div>
+                            <div class="alert alert-success" id="success-alert-exams" role="alert" style="display: none;"></div>
+                            <div class="alert alert-danger" id="error-alert-exams" role="alert" style="display: none;"></div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputExams">Select Exams</label>
-                                    <select class="custom-select" id="inputExams" multiple>
+                                    <select class="custom-select" name="exams[]" id="inputExams" multiple>
                                     </select>
                                 </div>
                             </div>

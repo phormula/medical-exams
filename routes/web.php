@@ -20,6 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('/addstructure', [DashboardController::class, 'store']);
+Route::post('/addstructureexams', [DashboardController::class, 'saveExams']);
 
 Route::get('/getstructure', [DashboardController::class,'getstructure']);
 Route::get('/getregions', [DashboardController::class,'getregions']);

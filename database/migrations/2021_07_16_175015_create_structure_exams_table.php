@@ -17,6 +17,7 @@ class CreateStructureExamsTable extends Migration
             $table->increments('id');
             $table->integer('structure_id')->unsigned()->index();
             $table->integer('exam_id')->unsigned()->index();
+            $table->timestamps();
 
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('CASCADE')->onUpdate('NO ACTION');
             $table->foreign('exam_id')->references('id')->on('exams')->onDelete('CASCADE')->onUpdate('NO ACTION');

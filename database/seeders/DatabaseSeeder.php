@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Structure;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -43,13 +44,20 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => today(),
             ]);
 
-            // insert and assign medical exams to structures - 8 for each
+            // insert and assign medical exams to structures - 9 for each
             for ($i = 0; $i <= 8; $i++){
                 DB::table('structure_exams')->insert([
                     'structure_id' => $x,
                     'exam_id' => rand(1,20),
                 ]);
             }
+        }
+        // make 3 random structures premium
+        for ($i = 0; $i <= 2; $i++){
+            Structure::where('user_id', rand(1,50))
+                ->update([
+                    'premium' => 1,
+                ]);
         }
     }
 }

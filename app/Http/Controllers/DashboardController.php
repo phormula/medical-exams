@@ -131,7 +131,30 @@ class DashboardController extends Controller
                     'message'=>'Structure information updated',
                 ]);
             }
-        // }
+    }
 
+    public function saveExams(Request $request)
+    {
+        $input = $request->all();
+        $userStructure = Structure::where('user_id', auth()->id())->first();
+        $data = [];
+        $data['structure_id'] = json_encode($userStructure->id);
+        $data['exam_id'] = json_encode($input['exams']);
+
+        for ($i = 0; $i < count($input['exams']); $i++) {
+            $exams[] = [
+                'structure_id' => $userStructure->id,
+                'exam_id' => $input['exams'][$i],
+            ];
+        }
+        
+        StructureExam::where('structure_id', $userStructure->id)->delete();
+        StructureExam::insert($exams);
+
+        // StructureExam::create($data);
+        return response()->json([
+            'status'=>'success',
+            'message'=>'Updated',
+        ]);
     }
 }

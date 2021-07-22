@@ -7,6 +7,7 @@ $(document).ready(function() {
     $('#inputZip').empty();
     $("#success-alert").hide();
 
+
     function getstates(regionID, token, selectedState){
         var select = '';
         $.ajax({
@@ -69,7 +70,7 @@ $(document).ready(function() {
                 if(data){
                     $.each(data, function(key, value){
                         $('select[id="inputExams"] option[value='+value.id+']').attr('selected', 'selected');
-                        console.log(value.id);
+                        // console.log(value.id);
                     });
                 }
             }
@@ -136,6 +137,41 @@ $(document).ready(function() {
         }
     });
 
+    $('#addexams').on('submit', function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize()+'&_token=' + $('meta[name="csrf-token"]').attr('content');
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url:"/addstructureexams",
+            method:"POST",
+            data:form_data,
+            success:function(response){
+                if(response){
+                    console.log(response);
+                    $('#formMsg').html('');
+                    if(response.status == 'error'){
+                        $("#error-alert-exams").html(response.message);
+                        $("#error-alert-exams").fadeTo(2000, 500).slideUp(500, function() {
+                            $("#error-alert-exams").slideUp(500);
+                        });
+                    }else{
+                        $("#success-alert-exams").html(response.message);
+                        $("#success-alert-exams").fadeTo(2000, 500).slideUp(500, function() {
+                            $("#success-alert-exams").slideUp(500);
+                        });
+                    }
+                }else{
+                    $("#error-alert-exams").html('An internal servver error has occured');
+                    $("#error-alert-exams").fadeTo(2000, 500).slideUp(500, function() {
+                        $("#error-alert-exams").slideUp(500);
+                    });
+                }
+            }
+        });
+      
+    });
+
 // Select State based on Region
     $('#inputRegion').on('change', function() {
         var regionID = $(this).val();
@@ -191,13 +227,22 @@ $(document).ready(function() {
         
         var selectedCity = $("select#inputCity").children("option:selected").val();
 
+        var premium = '';
+
+        if($('input#gridCheck').prop("checked") == true){
+            premium = 1;
+        }
+        else if($('input#gridCheck').prop("checked") == false){
+            premium = 0;
+        }
+
         var data = {
             '_token' : $('meta[name="csrf-token"]').attr('content'),
             'name' : $('#inputName').val(),
             'phone' : $('#inputPhone').val(),
             'city_id' : selectedCity,
             'address' : $('#inputAddress').val(),
-            'premium' : $("#gridCheck").attr("checked") ? 1 : 0,
+            'premium' : premium,
         }
         if(data){
             $.ajax({
