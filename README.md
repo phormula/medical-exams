@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About
 
 This project returns search results medical exams performed at various medical facilities in various locations. The geographical location data is populated with cities and regions in Italy.
 
@@ -43,7 +43,7 @@ This project is done with PHP/ [Laravel 8.x](https://laravel.com/).
     $ php artisan db:seed --class=DatabaseSeeder
 ```
 generated users are of the form 
-```sh
+```
 **email**: structure1@gmail.com, structure2@gmail.com, structure3@gmail.com, ...
 **password**: password
 ```
