@@ -67,6 +67,7 @@ Finally start the development server
 
 ### Added Packages
 [Spatie Laravel-activitylog](https://spatie.be/docs/laravel-activitylog/)
+Logs user activity
 
 ## License
 
