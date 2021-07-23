@@ -112,11 +112,6 @@ class DashboardController extends Controller
                 'phone' => $data->phone,
                 'address' => $data->address,
             ]);
-            activity()
-                ->performedOn($s)
-                ->causedBy(auth()->id())
-                ->withProperties(['IpAddress' => $data->ip()])
-                ->log('Structure Added');
 
             return response()->json([
                 'status'=>'success',
@@ -134,7 +129,7 @@ class DashboardController extends Controller
                                 'premium' => $data->premium,
                             ]);
 
-            activity()
+            activity('structure')
                 ->performedOn($s)
                 ->causedBy(auth()->id())
                 ->withProperties(['IpAddress' => $data->ip()])
