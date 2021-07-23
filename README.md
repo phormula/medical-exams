@@ -65,6 +65,8 @@ Finally start the development server
     $ php artisan serve
 ```
 
+### Added Packages
+[Spatie Laravel-activitylog](https://spatie.be/docs/laravel-activitylog/)
 
 ## License
 
