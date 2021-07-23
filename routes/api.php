@@ -4,6 +4,7 @@ use App\Models\Structure;
 use Illuminate\Http\Request;
 use App\Models\StructureExam;
 use Illuminate\Support\Facades\Route;
+use Spatie\Activitylog\Models\Activity;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/activity', function(){
+    return Activity::all();
 });
 
 Route::get('/structures', function(Request $request) {

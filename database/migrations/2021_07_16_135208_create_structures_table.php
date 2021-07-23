@@ -14,7 +14,7 @@ class CreateStructuresTable extends Migration
     public function up()
     {
         Schema::create('structures', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name');
             $table->integer('city_id')->unsigned()->index();
             $table->string('phone');

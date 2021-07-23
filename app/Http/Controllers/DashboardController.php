@@ -102,35 +102,49 @@ class DashboardController extends Controller
 
     public function store(Request $data)
     {
-            $userStructure = Structure::where('user_id', auth()->id())->first();
-            if(!$userStructure){
-                Structure::create([
-                    'user_id' => auth()->id(),
-                    'name' => $data->name,
-                    'city_id' => $data->city_id,
-                    'phone' => $data->phone,
-                    'address' => $data->address,
-                ]);
+        $s = new Structure();
+        $userStructure = Structure::where('user_id', auth()->id())->first();
+        if(!$userStructure){
+            Structure::create([
+                'user_id' => auth()->id(),
+                'name' => $data->name,
+                'city_id' => $data->city_id,
+                'phone' => $data->phone,
+                'address' => $data->address,
+            ]);
+            activity()
+                ->performedOn($s)
+                ->causedBy(auth()->id())
+                ->withProperties(['IpAddress' => $data->ip()])
+                ->log('Structure Added');
 
-                return response()->json([
-                    'status'=>'success',
-                    'message'=>'Structure added successfully',
-                ]);
-            }
-            else{
-                $structure = Structure::where('user_id', auth()->id())
-                                ->update([
-                                    'name' => $data->name,
-                                    'city_id' => $data->city_id,
-                                    'phone' => $data->phone,
-                                    'address' => $data->address,
-                                    'premium' => $data->premium,
-                                ]);
-                return response()->json([
-                    'status'=>'success',
-                    'message'=>'Structure information updated',
-                ]);
-            }
+            return response()->json([
+                'status'=>'success',
+                'message'=>'Structure added successfully',
+            ]);
+        }
+        else{
+
+            $structure = $s->where('user_id', auth()->id())
+                            ->update([
+                                'name' => $data->name,
+                                'city_id' => $data->city_id,
+                                'phone' => $data->phone,
+                                'address' => $data->address,
+                                'premium' => $data->premium,
+                            ]);
+
+            activity()
+                ->performedOn($s)
+                ->causedBy(auth()->id())
+                ->withProperties(['IpAddress' => $data->ip()])
+                ->log('Updated structure');
+
+            return response()->json([
+                'status'=>'success',
+                'message'=>'Structure information updated',
+            ]);
+        }
     }
 
     public function saveExams(Request $request)
