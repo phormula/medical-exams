@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class StructureExam extends Model
 {
     use HasFactory;
+
+    protected $table = "structure_exams";
+
     protected $fillable = ['structure_id', 'exam_id'];
+
+    public $timestamps = false;
 }

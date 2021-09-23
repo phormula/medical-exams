@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Exam extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    public function getStructures()
-    {
-        return $this->belongsToMany(Exam::class, 'structure_exams');
-    }
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'price'
+    ];
 }

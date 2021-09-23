@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Cities extends Model
 {
     use HasFactory;
+
+    public function structures()
+    {
+        return $this->belongsTo(Structure::class);
+    }
+
 }

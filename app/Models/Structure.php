@@ -13,7 +13,7 @@ class Structure extends Model
     protected $table = "structures";
 
     //insertable columns in database
-    protected $fillable = ['user_id', 'name', 'phone', 'address', 'city_id'];
+    protected $fillable = ['user_id', 'city_id', 'name', 'phone', 'address'];
 
     protected static $logName = 'structure';
 
@@ -24,5 +24,18 @@ class Structure extends Model
         $activity->properties = ["IpAddress" => $_SERVER['REMOTE_ADDR']];
     }
 
-    public $timestamps = false;
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'structure_exams');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function city()
+    {
+        return $this->hasOne(Cities::class, 'city_id');
+    }
 }

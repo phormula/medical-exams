@@ -1,10 +1,12 @@
 <?php
 
-use App\Models\Structure;
 use Illuminate\Http\Request;
-use App\Models\StructureExam;
 use Illuminate\Support\Facades\Route;
-use Spatie\Activitylog\Models\Activity;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StructureController;
+use App\Http\Controllers\StructureExamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,50 +19,36 @@ use Spatie\Activitylog\Models\Activity;
 |
 */
 
+// Route::resource('products', ProductController::class);
+
+// Public routes
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/exams', [ExamController::class, 'index']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/search/{name}', [ProductController::class, 'search']);
+
+Route::apiResource('structures', StructureController::class)->only(['index', 'show']);
+Route::get('/structures/search/{string}', [StructureController::class, 'search']);
+
+
+// Protected routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    Route::post('/structures', [StructureController::class, 'store']);
+    // Route::apiResource('/structures', StructureController::class)
+    //     ->middleware('manage.stucture')->only(['update', 'destroy']);
+    Route::put('/structures/{structure}', [StructureController::class, 'update']);
+    Route::delete('/structures/{structure}', [StructureController::class, 'destroy']);
+
+    Route::post('/structures/exam/{structure}', [StructureExamController::class, 'store']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
-
-Route::get('/activity', function(){
-    return Activity::all();
-});
-
-Route::get('/structures', function(Request $request) {
-
-    $exams = $request->input('search');
-
-        if($request->input('sortBy')){
-            $sort = $request->input('sortBy');
-        }else{
-            $sort = '';
-        }
-
-        // $this->validate($request, [
-        //     'search' => 'alpha_dash',
-        // ]);
-
-        //get structures based on search term
-        $structures = StructureExam::query()
-            ->join('exams', 'structure_exams.exam_id', '=', 'exams.id')
-            ->join('structures', 'structure_exams.structure_id', '=', 'structures.id')
-            ->join('cities', 'structures.city_id', '=', 'cities.id')
-            ->join('states', 'cities.state_id', '=', 'states.id')
-            ->join('regions', 'states.region_id', '=', 'regions.id')
-            ->join('postal_codes', 'cities.id', '=', 'postal_codes.city_id')
-            ->select('structures.name as name', 'cities.name as city', 'postal_codes.code as zip',
-            'states.name as state', 'regions.name as region', 'structures.address as address',
-            'structures.premium as premium')
-            ->where('exams.name', 'LIKE', "%{$exams}%")
-            ->groupBy('structures.name')
-            ->orderBy('structures.premium', 'DESC')
-            ->orderBy("{$sort}")
-            ->paginate(10);
-
-        //apend $_GET variables to URL
-        $structures->appends([
-            'search' => $exams,
-            'sortBy' => $sort,
-        ]);
-
-        return $structures;
 });
