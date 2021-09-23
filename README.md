@@ -27,17 +27,17 @@ This project is done with PHP/ [Laravel 8.x](https://laravel.com/).
 
 - Perform migrations
 ```sh
-    $ php artisan migrate
+php artisan migrate
 ```
 
 - Seed geolocation data (regions, states, cities, postal codes)
 ```sh
-    $ php artisan geolocate:seed
+php artisan geolocate:seed
 ```
 
 - Seed demo data (users, structures, exams)
 ```sh
-    $ php artisan db:seed --class=DatabaseSeeder
+php artisan db:seed --class=DatabaseSeeder
 ```
 generated users are of the form 
 ```
@@ -53,13 +53,13 @@ This project makes use of Bootstrap with Laravel mix and therefore you need ```n
 
 - Make sure you are the project's directory and run the following commands
 ```sh
-     npm install
-     npm run dev
+npm install
+npm run dev
 ```
 
 Finally start the development server
 ```sh
-     php artisan serve
+php artisan serve
 ```
 
 ### Added Packages
