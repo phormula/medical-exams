@@ -63,7 +63,6 @@ Finally start the development server
 ```
 
 ### Added Packages
-[Spatie Laravel-activitylog](https://spatie.be/docs/laravel-activitylog/)
 
  - REST API using auth tokens with Laravel Sanctum
 
