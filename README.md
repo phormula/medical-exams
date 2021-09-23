@@ -18,7 +18,7 @@ This project is done with PHP/ [Laravel 8.x](https://laravel.com/).
 
 - Clone this repository
 ```sh
-    $ git clone https://github.com/phormula/medical-exams.git
+git clone https://github.com/phormula/medical-exams.git
 ```
 - This project uses by default SQlite database (add [SQlite driver](https://www.php.net/manual/en/sqlite3.installation.php) for your version of PHP)
 
