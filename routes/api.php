@@ -20,8 +20,6 @@ use App\Http\Controllers\StructureExamController;
 |
 */
 
-// Route::resource('products', ProductController::class);
-
 // Public routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
