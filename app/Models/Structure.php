@@ -21,7 +21,7 @@ class Structure extends Model
 
     public function tapActivity(Activity $activity, string $eventName)
     {
-        $activity->properties = ["IpAddress" => $_SERVER['REMOTE_ADDR']];
+        $activity->properties = ["IpAddress" => request()->getClientIp()];
     }
 
     public function exams()

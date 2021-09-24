@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\Activitylog\Models\Activity;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ProductController;
@@ -26,8 +27,6 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/exams', [ExamController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::get('/products/search/{name}', [ProductController::class, 'search']);
 
 Route::apiResource('structures', StructureController::class)->only(['index', 'show']);
 Route::get('/structures/search/{string}', [StructureController::class, 'search']);
@@ -37,12 +36,17 @@ Route::get('/structures/search/{string}', [StructureController::class, 'search']
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/structures', [StructureController::class, 'store']);
-    // Route::apiResource('/structures', StructureController::class)
-    //     ->middleware('manage.stucture')->only(['update', 'destroy']);
     Route::put('/structures/{structure}', [StructureController::class, 'update']);
     Route::delete('/structures/{structure}', [StructureController::class, 'destroy']);
 
+    Route::get('/exams', [ExamController::class, 'store']);
+    Route::get('/exams/{exam}', [ExamController::class, 'update']);
+
     Route::post('/structures/exam/{structure}', [StructureExamController::class, 'store']);
+
+    Route::get('/activity', function () {
+        return Activity::all();
+    });
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

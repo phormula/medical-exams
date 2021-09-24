@@ -65,7 +65,7 @@ php artisan serve
 ### Added Packages
 
  - REST API using auth tokens with Laravel Sanctum
-
+ - [Spatie Laravel-activitylog](https://spatie.be/docs/laravel-activitylog/) Logs user activity
 
 ## License
 
