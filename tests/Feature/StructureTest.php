@@ -40,4 +40,17 @@ class StructureTest extends TestCase
         $response->assertOk();
         $this->assertCount(1, Structure::all());
     }
+
+    public function test_adds_exam_offered_by_structures()
+    {
+        $user = User::factory()->create();
+        $this->seed(GeolocateSeeder::class);
+
+        Sanctum::actingAs($user, ['*']);
+        $response = $this->post('api/structures-exam/2',
+                    ['exam_id' => '4']);
+
+        $response->assertOk();
+        $this->assertCount(1, StructureExam::all());
+    }
 }

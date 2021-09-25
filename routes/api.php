@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Structure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Spatie\Activitylog\Models\Activity;
@@ -32,6 +33,7 @@ Route::get('/structures/search/{string}', [StructureController::class, 'search']
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
 
     Route::apiResource('/structures', StructureController::class)->only(['store', 'destroy', 'update']);
 
