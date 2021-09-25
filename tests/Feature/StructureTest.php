@@ -8,7 +8,9 @@ use App\Models\User;
 use App\Models\Structure;
 use Laravel\Sanctum\Sanctum;
 use App\Models\StructureExam;
+use Database\Seeders\ExamSeeder;
 use Database\Seeders\GeolocateSeeder;
+use Database\Seeders\StructureSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -44,10 +46,21 @@ class StructureTest extends TestCase
     public function test_adds_exam_offered_by_structures()
     {
         $user = User::factory()->create();
+        $this->seed(ExamSeeder::class);
         $this->seed(GeolocateSeeder::class);
-
+        
         Sanctum::actingAs($user, ['*']);
-        $response = $this->post('api/structures-exam/2',
+        $response = $this->post('api/structures',
+        [
+            'name' => 'SS4',
+            'city_id' => '8',
+            'phone' => '+1545125542',
+            'address' => 'via hksfks'
+        ]);
+
+        // $this->test_add_structures();
+
+        $response = $this->post('api/structures-exam/1',
                     ['exam_id' => '4']);
 
         $response->assertOk();
