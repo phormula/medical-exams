@@ -29,7 +29,7 @@ class StructureController extends Controller
     {
         $fields = $request->validate([
             'name' => 'required',
-            'city_id' => 'required',
+            'city_id' => 'required|integer',
             'phone' => 'required',
             'address' => 'required'
         ]);

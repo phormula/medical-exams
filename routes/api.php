@@ -35,10 +35,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::apiResource('/structures', StructureController::class)->only(['store', 'destroy', 'update']);
 
-    Route::get('/exams', [ExamController::class, 'store']);
-    Route::get('/exams/{exam}', [ExamController::class, 'update']);
+    Route::post('/exams', [ExamController::class, 'store']);
+    Route::put('/exams/{exam}', [ExamController::class, 'update']);
 
-    Route::post('/structures/exam/{structure}', [StructureExamController::class, 'store']);
+    Route::post('/structures-exam/{structure}', [StructureExamController::class, 'store']);
 
     Route::get('/activity', function () {
         return Activity::all();
