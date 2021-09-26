@@ -17,15 +17,12 @@ class StructureOwnership
      * @param  \Structure $structure
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, Structure $structure)
+    public function handle(Request $request, Closure $next)
     {
-        // $structure = new Structure();
-
-        // $structure->find($request);
-        if(Gate::allows('manage-structure', $structure)){
+        if(Gate::allows('manage-structure', $request->structure)){
             return $next($request);
         }
 
-        return response()->json(['error' => 'Not authorized.'],403);
+        return response()->json(['error' => 'You are not authorized to manage this resource.'],403);
     }
 }

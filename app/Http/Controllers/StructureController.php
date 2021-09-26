@@ -63,9 +63,6 @@ class StructureController extends Controller
      */
     public function update(Request $request, Structure $structure)
     {
-        if (!Gate::allows('manage-structure', $structure)) {
-            return response()->json(['error' => 'Not authorized.'],403);
-        }
         $s = Structure::find($structure->id);
         $s->update($request->all());
 
@@ -83,9 +80,6 @@ class StructureController extends Controller
      */
     public function destroy(Structure $structure)
     {
-        if (!Gate::allows('manage-structure', $structure)) {
-            return response()->json(['error' => 'Not authorized.'],403);
-        }
         Structure::destroy($structure->id);
 
         return response()->json([

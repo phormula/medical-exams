@@ -33,9 +33,10 @@ Route::get('/structures/search/{string}', [StructureController::class, 'search']
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('structures', StructureController::class)->only(['store']);
 
-
-    Route::apiResource('/structures', StructureController::class)->only(['store', 'destroy', 'update']);
+    Route::apiResource('/structures', StructureController::class)->middleware('manage.stucture')
+            ->only(['destroy', 'update']);
 
     Route::post('/exams', [ExamController::class, 'store']);
     Route::put('/exams/{exam}', [ExamController::class, 'update']);
