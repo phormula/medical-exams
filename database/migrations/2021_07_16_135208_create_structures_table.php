@@ -18,7 +18,7 @@ class CreateStructuresTable extends Migration
             $table->string('name');
             $table->integer('city_id')->unsigned()->index();
             $table->string('phone');
-            $table->integer('user_id')->unsigned()->index();
+            $table->bigInteger('user_id')->unsigned()->index();
             $table->text('address');
             $table->boolean('premium')->default(0);
             $table->timestamps();
