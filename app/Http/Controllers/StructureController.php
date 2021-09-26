@@ -31,7 +31,8 @@ class StructureController extends Controller
             'name' => 'required',
             'city_id' => 'required|integer',
             'phone' => 'required',
-            'address' => 'required'
+            'address' => 'required',
+            'premium' => 'boolean',
         ]);
         $fields['user_id'] = auth()->id();
         

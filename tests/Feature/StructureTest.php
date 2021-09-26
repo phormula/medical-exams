@@ -37,7 +37,8 @@ class StructureTest extends TestCase
                         'name' => 'SS4',
                         'city_id' => '8',
                         'phone' => '+1545125542',
-                        'address' => 'via hksfks'
+                        'address' => 'via hksfks',
+                        'premium' => 1
                     ]);
 
         $response->assertOk();

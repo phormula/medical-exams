@@ -13,7 +13,7 @@ class Structure extends Model
     protected $table = "structures";
 
     //insertable columns in database
-    protected $fillable = ['user_id', 'city_id', 'name', 'phone', 'address'];
+    protected $fillable = ['user_id', 'city_id', 'name', 'phone', 'address', 'premium'];
 
     protected static $logName = 'structure';
 
