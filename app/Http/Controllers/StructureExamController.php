@@ -19,21 +19,12 @@ class StructureExamController extends Controller
             return response()->json(['error' => 'Not authorized.'],403);
         }
 
-        $row = StructureExam::where($fields)->first();
+        StructureExam::firstOrCreate($fields);
 
-        if($row === null){
-            StructureExam::create($fields);
-            return response()->json([
-                    'status'=>'success',
-                    'message'=>'Structure Exam added successfully',
-                ]);
-        }
-        else{
-            return response()->json([
-                    'status'=>'fail',
-                    'message'=>'Record already exist',
-                ]);
-        }
+        return response()->json([
+                'status'=>'success',
+                'message'=>'Structure Exam added successfully',
+            ]);
 
     }
 }
