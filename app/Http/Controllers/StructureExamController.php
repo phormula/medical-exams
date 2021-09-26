@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Gate;
 
 class StructureExamController extends Controller
 {
-    public function store(Request $request, Structure $structure){
-
+    public function store(Request $request, Structure $structure)
+    {
         $exams = explode(',', $request->exam_id);
 
         for ($i = 0; $i < count($exams); $i++) {
@@ -25,5 +25,22 @@ class StructureExamController extends Controller
                 'message'=>'Structure Exam added successfully',
             ]);
 
+    }
+
+    public function destroy(Request $request, Structure $structure)
+    {
+        $exams = explode(',', $request->exam_id);
+
+        for ($i = 0; $i < count($exams); $i++) {
+            StructureExam::firstWhere([
+                'structure_id' => $structure->id,
+                'exam_id' => $exams[$i],
+            ])->delete();
+        }
+
+        return response()->json([
+                'status'=>'success',
+                'message'=>'Structure Exam deleted',
+            ]);
     }
 }

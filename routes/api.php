@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('/structures', StructureController::class)->only(['destroy', 'update']);
 
         Route::post('/structures-exam/{structure}', [StructureExamController::class, 'store']);
+        Route::delete('/structures-exam/{structure}', [StructureExamController::class, 'destroy']);
     });
 
     Route::get('/user/structures/{usersId}', [StructureController::class, 'userStructure']);
