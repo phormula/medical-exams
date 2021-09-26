@@ -29,6 +29,7 @@ class StructureTest extends TestCase
     {
         $user = User::factory()->create();
         $this->seed(GeolocateSeeder::class);
+        $this->seed(ExamSeeder::class);
 
         Sanctum::actingAs($user, ['*']);
         $response = $this->post('api/structures',
@@ -45,25 +46,24 @@ class StructureTest extends TestCase
 
     public function test_adds_exam_offered_by_structures()
     {
-        $user = User::factory()->create();
-        $this->seed(ExamSeeder::class);
-        $this->seed(GeolocateSeeder::class);
-        
-        Sanctum::actingAs($user, ['*']);
-        $response = $this->post('api/structures',
-        [
-            'name' => 'SS4',
-            'city_id' => '8',
-            'phone' => '+1545125542',
-            'address' => 'via hksfks'
-        ]);
-
-        // $this->test_add_structures();
+        $this->test_add_structures();
 
         $response = $this->post('api/structures-exam/1',
-                    ['exam_id' => '4']);
+                    ['exam_id' => '4,5,6']);
 
         $response->assertOk();
-        $this->assertCount(1, StructureExam::all());
+        $this->assertCount(3, StructureExam::all());
+    }
+
+    public function test_removes_exam_offered_by_structures()
+    {
+        $this->test_adds_exam_offered_by_structures();
+        
+        $response = $this->delete('api/structures-exam/1',
+                    ['exam_id' => '6']);
+
+        $response->assertOk();
+        $this->assertCount(2, StructureExam::all());
+
     }
 }
