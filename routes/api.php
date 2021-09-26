@@ -35,13 +35,16 @@ Route::get('/structures/search/{string}', [StructureController::class, 'search']
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('structures', StructureController::class)->only(['store']);
 
-    Route::apiResource('/structures', StructureController::class)->middleware('manage.stucture')
-            ->only(['destroy', 'update']);
+    Route::middleware(['manage.stucture'])->group(function () {
+        Route::apiResource('/structures', StructureController::class)->only(['destroy', 'update']);
+
+        Route::post('/structures-exam/{structure}', [StructureExamController::class, 'store']);
+    });
+
+    Route::get('/user/structures/{usersId}', [StructureController::class, 'userStructure']);
 
     Route::post('/exams', [ExamController::class, 'store']);
     Route::put('/exams/{exam}', [ExamController::class, 'update']);
-
-    Route::post('/structures-exam/{structure}', [StructureExamController::class, 'store']);
 
     Route::get('/activity', function () {
         return Activity::all();

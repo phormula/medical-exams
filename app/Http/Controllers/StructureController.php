@@ -55,6 +55,17 @@ class StructureController extends Controller
     }
 
     /**
+     * Display user specified resources.
+     *
+     * @param  int  $userId
+     * @return \Illuminate\Http\Response
+     */
+    public function userStructure($userId)
+    {
+        return Structure::with('exams:name')->where('user_id', "{$userId}")->get();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
