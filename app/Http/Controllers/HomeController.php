@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\StructureExam;
+use App\Models\Structure;
+use App\Models\Exam;
+use App\Models\ExamStructure;
 
 class HomeController extends Controller
 {
@@ -14,29 +16,21 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $exam = $request->get('search');
         if($request->input('sortBy')){
             $sort = $request->input('sortBy');
         }else{
             $sort = 1;
         }
 
-        $structures = StructureExam::query()
-            ->join('exams', 'structure_exams.exam_id', '=', 'exams.id')
-            ->join('structures', 'structure_exams.structure_id', '=', 'structures.id')
-            ->join('cities', 'structures.city_id', '=', 'cities.id')
-            ->join('states', 'cities.state_id', '=', 'states.id')
-            ->join('regions', 'states.region_id', '=', 'regions.id')
-            ->join('postal_codes', 'cities.id', '=', 'postal_codes.city_id')
-            ->select('structures.name as name', 'cities.name as city', 'postal_codes.code as zip',
-            'states.name as state', 'regions.name as region', 'structures.address as address',
-            'structures.premium as premium')
-            ->where('exams.name', 'LIKE', "%{$request->get('search')}%")
-            ->groupBy('structures.name')
-            ->orderBy('structures.premium', 'DESC')
-            ->orderBy("{$sort}")
-            ->paginate(10);
+        $structures = Structure::with('city','state','region')->select('structures.*')
+                        ->join('exam_structure', 'structures.id', 'exam_structure.structure_id')
+                        ->join('exams', 'exam_structure.exam_id', 'exams.id')
+                        ->where('exams.name', 'like', "%$exam%")
+                        ->groupBy('structures.id')
+                        ->orderByDesc('premium')->paginate(10);
 
-        //apend $_GET variables to URL
+        //apend $requests to URL
         $structures->appends([
             'search' => $request->get('search'),
             'sortBy' => $sort,

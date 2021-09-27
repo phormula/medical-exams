@@ -16,8 +16,8 @@ class Exam extends Model
         $activity->properties = ["IpAddress" => request()->getClientIp()];
     }
 
-    public function getStructures()
+    public function structures()
     {
-        return $this->belongsToMany(Exam::class, 'structure_exams');
+        return $this->belongsToMany(Structure::class);
     }
 }

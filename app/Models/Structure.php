@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use \Znck\Eloquent\Traits\BelongsToThrough;
 
 class Structure extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, LogsActivity, BelongsToThrough;
     protected $table = "structures";
 
     //insertable columns in database
@@ -26,7 +27,7 @@ class Structure extends Model
 
     public function exams()
     {
-        return $this->belongsToMany(Exam::class, 'structure_exams');
+        return $this->belongsToMany(Exam::class);
     }
 
     public function user()
@@ -36,6 +37,21 @@ class Structure extends Model
 
     public function city()
     {
-        return $this->hasOne(Cities::class, 'city_id');
+        return $this->belongsTo(Cities::class);
     }
+
+    public function state()
+    {
+        return $this->belongsToThrough(State::class, Cities::class);
+    }
+
+    public function region()
+    {
+        return $this->belongsToThrough(Region::class, [State::class, Cities::class]);
+    }
+
+    // public function postCodes()
+    // {
+    //     return $this->belongsToThrough(PostalCode::class, Cities::class);
+    // }
 }

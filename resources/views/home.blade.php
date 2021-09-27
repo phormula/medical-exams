@@ -64,8 +64,8 @@
                                             <p class="card-text">
                                                 <i class="fa fa-map-marker" aria-hidden="true"></i> 
                                                     {{ $structure->address }}, 
-                                                    {{ $structure->city }}, {{ $structure->state }}, 
-                                                    {{ $structure->region }}, {{ $structure->zip }}
+                                                    {{ $structure->city->name }}, {{ $structure->state->name }}, 
+                                                    {{ $structure->region->name }},
                                             </p>
                                         </div>
                                     </div>

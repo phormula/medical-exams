@@ -7,11 +7,11 @@ use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class StructureExam extends Model
+class ExamStructure extends Model
 {
     use HasFactory, LogsActivity;
 
-    protected $table = "structure_exams";
+    protected $table = "exam_structure";
 
     protected $fillable = ['structure_id', 'exam_id'];
 

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Structure;
 use Illuminate\Support\Str;
-use App\Models\StructureExam;
+use App\Models\ExamStructure;
 use Illuminate\Database\Seeder;
 
 class StructureSeeder extends Seeder
@@ -30,7 +30,7 @@ class StructureSeeder extends Seeder
 
             // insert and assign medical exams to structures - (9 for each)
             for ($i = 0; $i <= 8; $i++){
-                StructureExam::create([
+                ExamStructure::create([
                     'structure_id' => $x,
                     'exam_id' => rand(1,20),
                 ]);

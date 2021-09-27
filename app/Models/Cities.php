@@ -11,7 +11,12 @@ class Cities extends Model
 
     public function structures()
     {
-        return $this->belongsTo(Structure::class);
+        return $this->hasMany(Structure::class, 'city_id');
+    }
+
+    public function postCodes()
+    {
+        return $this->hasOne(PostalCode::class, 'city_id');
     }
 
 }

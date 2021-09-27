@@ -8,7 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StructureController;
-use App\Http\Controllers\StructureExamController;
+use App\Http\Controllers\ExamStructureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::middleware(['manage.stucture'])->group(function () {
         Route::apiResource('/structures', StructureController::class)->only(['destroy', 'update']);
 
-        Route::post('/structures-exam/{structure}', [StructureExamController::class, 'store']);
-        Route::delete('/structures-exam/{structure}', [StructureExamController::class, 'destroy']);
+        Route::post('/structures-exam/{structure}', [ExamStructureController::class, 'store']);
+        Route::delete('/structures-exam/{structure}', [ExamStructureController::class, 'destroy']);
     });
 
     Route::get('/user/structures/{usersId}', [StructureController::class, 'userStructure']);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Structure;
 use Illuminate\Http\Request;
-use App\Models\StructureExam;
+use App\Models\ExamStructure;
 use Illuminate\Support\Facades\Gate;
 
 class StructureController extends Controller
@@ -16,7 +16,7 @@ class StructureController extends Controller
      */
     public function index()
     {
-        return Structure::with('exams:name')->paginate(10);
+        return Structure::with('exams:name', 'city', 'state', 'region')->paginate(10);
     }
 
     /**
@@ -52,7 +52,8 @@ class StructureController extends Controller
      */
     public function show($id)
     {
-        return Structure::with('exams:name')->where('id', "{$id}")->get();
+        return Structure::with('exams:name', 'city', 'state', 'region')
+                ->where('id', "{$id}")->get();
     }
 
     /**

@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Structure;
 use Illuminate\Http\Request;
-use App\Models\StructureExam;
+use App\Models\ExamStructure;
 use Illuminate\Support\Facades\Gate;
 
-class StructureExamController extends Controller
+class ExamStructureController extends Controller
 {
     public function store(Request $request, Structure $structure)
     {
         $exams = explode(',', $request->exam_id);
 
         for ($i = 0; $i < count($exams); $i++) {
-            StructureExam::firstOrCreate([
+            ExamStructure::firstOrCreate([
                 'structure_id' => $structure->id,
                 'exam_id' => $exams[$i],
             ]);
@@ -32,7 +32,7 @@ class StructureExamController extends Controller
         $exams = explode(',', $request->exam_id);
 
         for ($i = 0; $i < count($exams); $i++) {
-            StructureExam::firstWhere([
+            ExamStructure::firstWhere([
                 'structure_id' => $structure->id,
                 'exam_id' => $exams[$i],
             ])->delete();

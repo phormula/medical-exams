@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PostalCode extends Model
 {
     use HasFactory;
+
+    public function city()
+    {
+        return $this->belongsTo(Cities::class);
+    }
 }

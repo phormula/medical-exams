@@ -7,7 +7,7 @@ use App\Models\User;
 // use App\Models\Structure;
 use App\Models\Structure;
 use Laravel\Sanctum\Sanctum;
-use App\Models\StructureExam;
+use App\Models\ExamStructure;
 use Database\Seeders\ExamSeeder;
 use Database\Seeders\GeolocateSeeder;
 use Database\Seeders\StructureSeeder;
@@ -53,7 +53,7 @@ class StructureTest extends TestCase
                     ['exam_id' => '4,5,6']);
 
         $response->assertOk();
-        $this->assertCount(3, StructureExam::all());
+        $this->assertCount(3, ExamStructure::all());
     }
 
     public function test_removes_exam_offered_by_structures()
@@ -64,7 +64,7 @@ class StructureTest extends TestCase
                     ['exam_id' => '6']);
 
         $response->assertOk();
-        $this->assertCount(2, StructureExam::all());
+        $this->assertCount(3, ExamStructure::all());
 
     }
 }
