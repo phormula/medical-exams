@@ -23,7 +23,10 @@ git clone https://github.com/phormula/medical-exams.git
 - This project uses by default SQlite database (add [SQlite driver](https://www.php.net/manual/en/sqlite3.installation.php) for your version of PHP)
 
 - Create the SQlite database file under ``` ./medical-exams/database/ ``` directory and name it ``` database.sqlite ```
-- Update the ``` .env ``` file with the absolute path of the database file ``` (DB_DATABASE=/home/{path/to/project}/medical-exams/database/database.sqlite) ```
+- Load vendor files by runnung 
+```sh
+composer update
+```
 
 - Perform migrations
 ```sh
