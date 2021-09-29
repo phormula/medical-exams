@@ -28,8 +28,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/exams', [ExamController::class, 'index']);
 
 Route::apiResource('structures', StructureController::class)->only(['index', 'show']);
-Route::get('/structures/search/{string}', [StructureController::class, 'search']);
-
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
