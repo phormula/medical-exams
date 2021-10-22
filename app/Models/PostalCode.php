@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class postal_codes extends Model
+class PostalCode extends Model
 {
     use HasFactory;
 }

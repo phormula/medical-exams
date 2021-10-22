@@ -6,9 +6,9 @@ use auth;
 use App\Models\Exam;
 use App\Models\Cities;
 use App\Models\Region;
-use App\Models\States;
+use App\Models\State;
 use App\Models\Structure;
-use App\Models\postal_codes;
+use App\Models\PostalCode;
 use Illuminate\Http\Request;
 use App\Models\StructureExam;
 

@@ -18,4 +18,10 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function dashboard(){
+        $res = $this->get('/getstructure');
+
+        $res->assertStatus(200);
+    }
 }
